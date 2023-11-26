@@ -46,10 +46,10 @@ const Dashboard = () => {
   const [vendorId, setvendorId] = useState("date");
 
 
-  console.log(date);
   useEffect(() => {
     const token = localStorage.getItem('TMtoken')
-
+    
+    console.log(token);
     if (token) {
       // Parse the JWT token to extract the role
       const tokenData = JSON.parse(atob(token.split('.')[1]));

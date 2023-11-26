@@ -1,23 +1,27 @@
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
+import { useUser } from '../components/UserContext.js';
 
 const ImageUploadComponent = ({ onUploadSuccess }) => {
+  const { userId } = useUser();
   const onDrop = useCallback(async (acceptedFiles) => {
     const formData = new FormData();
     formData.append('image', acceptedFiles[0]);
 
     try {
+      const token = localStorage.getItem('TMtoken')
       const response = await axios.post('http://localhost:3001/api/imageupload/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           // Add your JWT token in the Authorization header
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTIzNzA5MzExMjY4NzgxZTFjNTlkYiIsInJvbGUiOiJ2ZW5kb3IiLCJuYW1lIjoiUHJhbW9kIEtlc2Fya2FyIiwiY29tcGFueU5hbWUiOiJDb21wYW55IE5hbWUiLCJpYXQiOjE3MDA3MzE2MzMsImV4cCI6MTcwMDgxODAzM30.Fena9yLCRbXvkNpAwybOi6LlW-9039pSY33uq-VIkpA`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
       if (onUploadSuccess) {
         onUploadSuccess(response.data.imageUrl);
+        console.log(response.data.imageUrl);
       }
     } catch (error) {
       console.error('Error uploading image:', error);
@@ -33,7 +37,7 @@ const ImageUploadComponent = ({ onUploadSuccess }) => {
         {
           isDragActive ?
             <p>Drop the files here ...</p> :
-            <p>Drag 'n' drop some files here, or click to select files</p>
+            <p>Drag 'n' drop Image here, or click to select Image</p>
         }
       </div>
     </section>

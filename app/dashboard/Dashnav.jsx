@@ -12,6 +12,9 @@ import { useUser } from '../components/UserContext.js';
 
 const page = () => {
 
+
+  const { setUserIdFromResponse } = useUser();
+
     return (
         <div className="flex flex-col bg-clip-border h-screen w-[20rem] p-4 bg-sky-400 text-white fixed">
             <div className=''>
@@ -39,7 +42,11 @@ const page = () => {
                             <FaRegUser />
                         </div>
                         <div className='flex justify-between items-center w-full'>
-                            <a href="/profile" className=''>Profile</a><a href="/dashboard/editprofilehome" className=' p-2 rounded-md transition-all text-blue-50 pl-3 group-hover:text-yellow-500 hover:scale-150'><FaEdit /></a>
+                            <a href="/profile" onClick={()=>{
+                                const token = localStorage.getItem('TMtoken')
+                                console.log(token);
+                                setUserIdFromResponse(token);
+                            }} className=''>Profile</a><a href="/dashboard/editprofilehome" className=' p-2 rounded-md transition-all text-blue-50 pl-3 group-hover:text-yellow-500 hover:scale-150'><FaEdit /></a>
                         </div>
                         <div className="grid place-items-center ml-auto justify-self-end">
                             {/* <div className="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-blue-500/20 text-blue-900 py-1 px-2 text-xs rounded-full" style={{ opacity: 1 }}>

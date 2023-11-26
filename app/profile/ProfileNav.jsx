@@ -3,7 +3,6 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Line from "../components/LineH";
 import { IoLogoWhatsapp } from 'react-icons/io';
 import { FaRegShareSquare } from 'react-icons/fa';
 import { FiPhoneCall } from 'react-icons/fi';
@@ -31,7 +30,8 @@ const ProfileNav = () => {
   const [vendorInfo, setVendorInfo] = useState([]);
   const [search, setsearch] = useState('');
   const { userId } = useUser();
-
+  
+  const token = localStorage.getItem('TMtoken')
 
   const handleChange = (e) => {
     if (e.target.name == 'email') {
@@ -47,7 +47,7 @@ const ProfileNav = () => {
     const fetchVendorInfo = async () => {
       try {
         // Get the TMtoken from local storage
-        const Token = userId
+        const Token = token
 
 
         const response = await fetch('http://localhost:3001/api/vendorinfo/get', {
